@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author Franco & Hugo
@@ -38,6 +37,16 @@ public class BuenaSalud {
         String nombre_paciente;
         String fecha_pago;
         String observacion;
+        /*
+        *******Datos*********
+        doctor.add(new Doctor("1", "Hugo", "cardio", 1));
+        doctor.add(new Doctor("2", "Franco", "d", 2));
+        doctor.add(new Doctor("3", "LELE", "l", 3));
+        reserva.add(new ReservaPagoHora(1, "1 sep", "1", "44", "PA1", null, 1, "obs"));
+        reserva.add(new ReservaPagoHora(2, "12 sep", "1", "44", "PA2", "1 sep", 1, "obs"));
+        reserva.add(new ReservaPagoHora(3, "13 sep", "1", "44", "PA3", "1 sep", 1, "obs"));
+        reserva.add(new ReservaPagoHora(4, "14 sep", "2", "44", "PA4", "1 sep", 1, "obs"));
+        */
         while(loop){
             joption =JOptionPane.showInputDialog("Menu\n"
                     + "1) Ingresar Doctor\n"
@@ -142,8 +151,68 @@ public class BuenaSalud {
                         observacion = JOptionPane.showInputDialog("Observacion");
                         reserva.add(new ReservaPagoHora(folio, fecha, rut, rut_paciente, nombre_paciente, null, valor_atencion, observacion));
                     }else{
-                        JOptionPane.showMessageDialog(null, "Doctor no encontrado:\n");
+                        JOptionPane.showMessageDialog(null, "Doctor no encontrado\n");
                     }
+                }                
+                if (opcion == 6) {
+                    encontrado = false;
+                    folio = Integer.parseInt(JOptionPane.showInputDialog("Ingrese Folio a pagar:"));
+                    for (int i = 0; i < reserva.size(); i++) {
+                        if (folio == reserva.get(i).getFolio()) {
+                           fecha_pago =  JOptionPane.showInputDialog("Folio encontrado:\n"
+                                    + "Ingrese fecha de pago");
+                           reserva.get(i).setFecha_pago(fecha_pago);
+                           encontrado = true;
+                        }
+                    }
+                    if (!encontrado) {
+                        JOptionPane.showMessageDialog(null, "Folio no encontrado\n");
+                    }
+                }
+                if (opcion == 7) {
+                    rut = JOptionPane.showInputDialog("Ingrese Rut del Doctor:");
+                    lista= "";
+                    for (int i = 0; i < reserva.size(); i++) {
+                        if (rut.equals(reserva.get(i).getRut_doctor())) {
+                            lista += "Nombre paciente: "+reserva.get(i).getNombre_paciente()+" ";
+                            lista += "| Rut paciente: "+reserva.get(i).getRut_paciente()+" ";
+                            lista += "| Fecha de reserva: "+reserva.get(i).getFecha()+" ";
+                            lista += "| Valor: "+reserva.get(i).getValor_atencion()+" ";
+                            lista += "| Observacion: "+reserva.get(i).getObservacion()+"\n";  
+                        }                                 
+                    }
+                    JOptionPane.showMessageDialog(null, lista );
+                }
+                if (opcion == 8) {
+                    rut = JOptionPane.showInputDialog("Ingrese Rut del Doctor:");
+                    lista= "";
+                    for (int i = 0; i < reserva.size(); i++) {
+                        if (rut.equals(reserva.get(i).getRut_doctor()) && reserva.get(i).getFecha_pago() != null) {
+                            lista += "Nombre paciente: "+reserva.get(i).getNombre_paciente()+" ";
+                            lista += "| Rut paciente: "+reserva.get(i).getRut_paciente()+" ";
+                            lista += "| Fecha de reserva: "+reserva.get(i).getFecha()+" ";
+                            lista += "| Fecha de pago: "+reserva.get(i).getFecha_pago()+" ";
+                            lista += "| Valor: "+reserva.get(i).getValor_atencion()+" ";
+                            lista += "| Observacion: "+reserva.get(i).getObservacion()+"\n";  
+                        }                                 
+                    }
+                    JOptionPane.showMessageDialog(null, lista );
+                }
+                if (opcion == 9) {
+                    fecha = JOptionPane.showInputDialog("Ingrese Fecha a consultar:");
+                    lista= "";
+                    for (int i = 0; i < reserva.size(); i++) {
+                        if (fecha.equals(reserva.get(i).getFecha())) {
+                            lista += "Rut Doctor: "+reserva.get(i).getRut_doctor()+" ";
+                            lista += "| Nombre paciente: "+reserva.get(i).getNombre_paciente()+" ";
+                            lista += "| Rut paciente: "+reserva.get(i).getRut_paciente()+" ";
+                            lista += "| Fecha de reserva: "+reserva.get(i).getFecha()+" ";
+                            lista += "| Fecha de pago: "+reserva.get(i).getFecha_pago()+" ";
+                            lista += "| Valor: "+reserva.get(i).getValor_atencion()+" ";
+                            lista += "| Observacion: "+reserva.get(i).getObservacion()+"\n";  
+                        }                                 
+                    }
+                    JOptionPane.showMessageDialog(null, lista );
                 }
 
             }catch(Exception e){
@@ -151,9 +220,4 @@ public class BuenaSalud {
             }  
         }
     }
-    
-    public void opc1(){
-        
-    }
-    
 }
